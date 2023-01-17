@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Viga&display=swap" rel="stylesheet"> 
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="utama">
+        <h2>Kalkulator</h2>
+        <form name="form">
+            <input class="textarea" name="textarea">
+        </form>
+        <table>
+            <tr>
+                <td><input class="button" type="button" value="C" onclick="bersih()"></td>
+                <td><input class="button" type="button" value="<" onclick="hapus()"></td>
+                <td><input class="button btn-green" type="button" value="/" onclick="masuk(' / ')"></td>
+                <td><input class="button btn-green" type="button" value="x" onclick="masuk(' * ')"></td>
+            </tr>
+            <tr>
+                <td><input class="button" type="button" value="7" onclick="masuk(7)"></td>
+                <td><input class="button" type="button" value="8" onclick="masuk(8)"></td>
+                <td><input class="button" type="button" value="9" onclick="masuk(9)"></td>
+                <td><input class="button btn-green" type="button" value="-" onclick="masuk(' - ')"></td>
+            </tr>
+            <tr>
+                <td><input class="button" type="button" value="4" onclick="masuk(4)"></td>
+                <td><input class="button" type="button" value="5" onclick="masuk(5)"></td>
+                <td><input class="button" type="button" value="6" onclick="masuk(6)"></td>
+                <td><input class="button btn-green" type="button" value="+" onclick="masuk(' + ')"></td>
+            </tr>
+            <tr>
+                <td><input class="button" type="button" value="1" onclick="masuk(1)"></td>
+                <td><input class="button" type="button" value="2" onclick="masuk(2)"></td>
+                <td><input class="button" type="button" value="3" onclick="masuk(3)"></td>
+                <td rowspan=2><input style="height:106px;" class="button btn-green" type="button" value="=" onclick="hitung()"></td>
+            </tr>
+            <tr>
+                <td><input class="button" type="button" value="0" onclick="masuk(0)"></td>
+                <td><input class="button" type="button" value="00" onclick="masuk('00')"></td>
+                <td><input class="button" type="button" value="." onclick="masuk('.')"></td>
+            </tr>
+        </table>
+        <p class="footer">Kalkulator Made By : Vian.</p>
+    </div>
+    
+</body>
+</html>
