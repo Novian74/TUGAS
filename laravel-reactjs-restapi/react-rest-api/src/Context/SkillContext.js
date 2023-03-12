@@ -8,6 +8,13 @@ const SkillContext = createContext();
 const initialForm = {
   name: "",
   slug: "",
+  pelanggan: "",
+  alamat: "",
+  telp: "",
+  barang: "",
+  deskripsi: "",
+  harga: "",
+  kategori: "",
 };
 
 export const SkillProvider = ({ children }) => {
@@ -15,6 +22,16 @@ export const SkillProvider = ({ children }) => {
 
   const [skills, setSkills] = useState([]);
   const [skill, setSkill] = useState([]);
+
+  const [pelanggans, setPelanggans] = useState([]);
+  const [pelanggan, setPelanggan] = useState([]);
+
+  const [produks, setProduks] = useState([]);
+  const [produk, setProduk] = useState([]);
+
+  const [pesanan, setPesanan] = useState([]);
+  const [pesan, setPesan] = useState([]);
+
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -22,6 +39,8 @@ export const SkillProvider = ({ children }) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+
+  // -------------------------- Skill ----------------------------------------------------------------------------------- //
 
   const getSkills = async () => {
     const apiSkills = await axios.get("skills");
@@ -65,14 +84,125 @@ export const SkillProvider = ({ children }) => {
   };
 
   const deleteSkill = async (id) => {
-    if (window.confirm("Are you sure")) {
-      return;
-    }
     await axios.delete("skills/" + id);
     getSkills();
   }
 
-  return <SkillContext.Provider value={{ skill, skills, getSkill, getSkills, onChange, formValues, storeSkill, errors, setErrors, updateSkill, deleteSkill }}>{children}</SkillContext.Provider>
+  // ---------------------------- Pelanggan ---------------------------------------------------------------------------- //
+
+  const getPelanggans = async () => {
+    const apiPelanggans = await axios.get("pelanggan");
+    setPelanggans(apiPelanggans.data.data);
+  };
+
+  const storePelanggan = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("pelanggan", formValues);
+      setFormValues(initialForm);
+      navigate("/pelanggan");
+    } catch (e) {
+      if (e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      }
+    }
+  }
+
+  const getPelanggan = async (id) => {
+    const respoonse = await axios.get("pelanggan/" + id);
+    const apiPelanggan = respoonse.data.data;
+    setPelanggan(apiPelanggan);
+    setFormValues({
+      pelanggan: apiPelanggan.pelanggan,
+      alamat: apiPelanggan.alamat,
+      telp: apiPelanggan.telp
+    })
+  }
+
+  const updatePelanggan = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put("pelanggan/" + pelanggan.id, formValues);
+      setFormValues(initialForm);
+      navigate("/pelanggan");
+    } catch (e) {
+      if (e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      }
+    }
+  };
+
+  const deletePelanggan = async (id) => {
+    await axios.delete("pelanggan/" + id);
+    getPelanggans();
+  }
+
+  // ---------------------------------- Produk -------------------------------------------------------------------------- //
+
+  const getProduks = async () => {
+    const apiProduks = await axios.get("produk");
+    setProduks(apiProduks.data.data);
+  };
+
+  const storeProduk = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("produk", formValues);
+      setFormValues(initialForm);
+      navigate("/produk");
+    } catch (e) {
+      if (e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      }
+    }
+  }
+
+  const getProduk = async (id) => {
+    const respoonse = await axios.get("produk/" + id);
+    const apiProduk = respoonse.data.data;
+    setProduk(apiProduk);
+    setFormValues({
+      barang: apiProduk.barang,
+      deskripsi: apiProduk.deskripsi,
+      harga: apiProduk.harga,
+      kategori: apiProduk.kategori
+    })
+  }
+
+  const updateProduk = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put("produk/" + produk.id, formValues);
+      setFormValues(initialForm);
+      navigate("/produk");
+    } catch (e) {
+      if (e.response.status === 422) {
+        setErrors(e.response.data.errors);
+      }
+    }
+  };
+
+  const deleteProduk = async (id) => {
+    await axios.delete("produk/" + id);
+    getProduks();
+  }
+
+  // ------------------------------------------- Keranjang -------------------------------------------------------------- //
+
+  const getKeranjang = async (id) => {
+    const respoonse = await axios.get("produk/" + id);
+    const apiProduk = respoonse.data.data;
+    setPesanan(apiProduk);
+
+  }
+
+  const getPesanan = async (id) => {
+    const respoonse = await axios.get("pelanggan/" + id);
+    const apiPelanggan = respoonse.data.data;
+    setPesan(apiPelanggan);
+  }
+
+  return <SkillContext.Provider value={{ skill, skills, getSkill, getSkills, onChange, formValues, storeSkill, errors, setErrors, updateSkill, deleteSkill, getPelanggans, pelanggans, storePelanggan, deletePelanggan, getPelanggan, pelanggan, updatePelanggan, getProduks, produks, storeProduk, deleteProduk, getProduk, produk, updateProduk, getKeranjang, getPesanan, pesanan, pesan }}>{children}</SkillContext.Provider>
 }
 
 export default SkillContext;
