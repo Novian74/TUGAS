@@ -86,7 +86,7 @@ export const KeranjangIndex = () => {
                   +
                 </button>
               </td>
-              <td className="py-3 text-center">$ {pesanan.harga}</td>
+              <td className="py-3 text-center">$ {pesanan.harga * counter}</td>
             </tr>
           </tbody>
         </table>
